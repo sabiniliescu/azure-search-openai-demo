@@ -10,30 +10,69 @@ from approaches.approach import Approach
 
 class ChatApproach(Approach, ABC):
     query_prompt_few_shots: list[ChatCompletionMessageParam] = [
-        {"role": "user", "content": "How did crypto do last year?"},
-        {"role": "assistant", "content": "Summarize Cryptocurrency Market Dynamics from last year"},
-        {"role": "user", "content": "What are my health plans?"},
-        {"role": "assistant", "content": "Show available health plans"},
+        {"role": "user", "content": "ce aveti in focsani?"},
+        {"role": "assistant", "content": "avanpost in Focsani"},
+        {"role": "user", "content": "da-mi 10 variante de locatii fizice, doar din bucuresti, in care gasesc pantofi de munte"},
+        {"role": "assistant", "content": "avanposturi fizice bucuresti pantofi de munte"},
+        {"role": "user", "content": "unde beau un vin in Cluj?"},
+        {"role": "assistant", "content": "avanpost bar sau restaurant unde pot bea vin in Cluj"},
+        {"role": "user", "content": "ce avanposturi cu haine sunt in cluj, da-mi vreo 10?"},
+        {"role": "assistant", "content": "avanpost magazin fizice cu haine in Cluj"},
+        {"role": "user", "content": "De unde comand niste flori in Sectorul 3"},
+        {"role": "assistant", "content": "avanpost site web sau magazin fizic cu flori in Bucuresti Sector 3"},
+        {"role": "user", "content": "De unde imi comand haine in Sibiu"},
+        {"role": "assistant", "content": "avanpost site web sau magazin fizic cu haine Sibiu"},
+        {"role": "user", "content": "Ce stii sa imi spui despre Napapijri?"},
+        {"role": "assistant", "content": "avanpost Napapijri"},
+        {"role": "user", "content": "De unde imi cumpar haine?"},
+        {"role": "assistant", "content": "avanpost cumparaturi haine"},
+        {"role": "user", "content": "Aveti avanposturi pe medicina?"},
+        {"role": "assistant", "content": "avanpost servicii medicale"}
+        # {"role": "user", "content": "ok, zi si altele in loc de astea 2"},
+        # {"role": "assistant", "content": "avanpost site web sau magazin fizic in localitate"}
     ]
     NO_RESPONSE = "0"
 
-    follow_up_questions_prompt_content = """Generate 3 very brief follow-up questions that the user would likely ask next.
-    Enclose the follow-up questions in double angle brackets. Example:
-    <<Are there exclusions for prescriptions?>>
-    <<Which pharmacies can be ordered from?>>
-    <<What is the limit for over-the-counter medication?>>
-    Do no repeat questions that have already been asked.
-    Make sure the last question ends with ">>".
+#SI
+    # follow_up_questions_prompt_content = """Generate 3 very brief follow-up questions that the user would likely ask next.
+    # Enclose the follow-up questions in double angle brackets. Example:
+    # <<Are there exclusions for prescriptions?>>
+    # <<Which pharmacies can be ordered from?>>
+    # <<What is the limit for over-the-counter medication?>>
+    # Do no repeat questions that have already been asked.
+    # Make sure the last question ends with ">>".
+    # """
+#SI
+    # query_prompt_template = """Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base.
+    # You have access to Azure AI Search index with 100's of documents.
+    # Generate a search query based on the conversation and the new question.
+    # Do not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.
+    # Do not include any text inside [] or <<>> in the search query terms.
+    # Do not include any special characters like '+'.
+    # If the question is not in English, translate the question to English before generating the search query.
+    # If you cannot generate a search query, return just the number 0.
+    # """
+#SI
+    follow_up_questions_prompt_content = """Generează 3 întrebări de follow-up foarte scurte pe care utilizatorul ar putea să le pună în continuare.
+    Încadreaza întrebările de follow-up între două paranteze unghiulare. Exemplu:
+    <<Dar in Bucuresti?>>
+    <<Mai incearca o data>>
+    <<Gasesc cumva pe un site web?>>
+    <<Dar intr-un alt oras?>>
+    Nu repeta întrebările care au fost deja puse.
+    Asigurate că ultima întrebare se termină cu ">>".
     """
-
-    query_prompt_template = """Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base.
-    You have access to Azure AI Search index with 100's of documents.
-    Generate a search query based on the conversation and the new question.
-    Do not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.
-    Do not include any text inside [] or <<>> in the search query terms.
-    Do not include any special characters like '+'.
-    If the question is not in English, translate the question to English before generating the search query.
-    If you cannot generate a search query, return just the number 0.
+#SI
+    query_prompt_template = """Mai jos este un istoric al conversației de până acum și o nouă întrebare adresată de utilizator, care trebuie răspunsă prin căutarea într-o bază de date de cunoștințe.
+    Ai acces la un index Azure AI Search cu sute de documente.
+    Generează o interogare de căutare pe baza conversației și a noii întrebări.
+    Dacă utilizatorul nu îți indică o localitate, nu include nicio localitate în rescrierea interogării.
+    Nu include în termenii de căutare numele fișierelor și documentelor citate, de exemplu, info.txt sau doc.pdf.
+    Nu include niciun text în interiorul [] sau <<>> în termenii de căutare.
+    Nu include caractere speciale, cum ar fi '+'.
+    Elimină numărul de avanposturi din interogare.
+    Dacă întrebarea nu este în limba română, trebuie să traduci întrebarea în limba română înainte de a genera interogarea de căutare.
+    Dacă nu poți genera o interogare de căutare, returnează doar numărul 0.
     """
 
     @property
